@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DJB Flask Chat App - Messages</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css" />
+</head>
+<body>
+    <h1>Hi {{ username }}</h1>
+    
+    <form method="POST">
+        <label for="message">Enter Message:<br></label>
+        <textarea col="20" rows="5" id="message" name="message"></textarea>
+        <button>Send message!</button>
+    </form>
+    
+    <table>
+        {% for message in chat_messages %}
+        <tr>
+            <td>{{ message.timestamp }}</td>
+            <td>{{ message.from }}</td>
+            <td>{{ message.message }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <script>
+    // Refresh page every 5s apart from when something is being typed
+        let textbox = document.getElementById("message")
+        
+        let timer = setTimeout(function() {
+            location.reload();
+        }, 5000)
+        
+        textbox.onkeydown = function(e) {
+            clearTimeout(timer)
+            timer = setTimeout(function() {
+            location.reload();
+            }, 5000)
+        }
+    </script>
+</body>
+</html>
